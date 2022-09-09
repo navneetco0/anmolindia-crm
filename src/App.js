@@ -8,7 +8,7 @@ import { ManageContact } from "./Pages/ManageContact";
 import io from 'socket.io-client';
 import { useDispatch } from 'react-redux';
 import { useEffect } from "react";
-import { setAllContacts } from "./Redux/action";
+import { setAllContacts, setAllTrashes } from "./Redux/action";
 const socket = io.connect('http://localhost:3001');
 
 function App() {
@@ -16,7 +16,10 @@ function App() {
   useEffect(() => {
     socket.on('all_contacts', (data) => {
       dispatch(setAllContacts(data))
-    })
+    });
+    socket.on('all_trashes', (data)=>{
+      dispatch(setAllTrashes(data));
+   });
   }, [socket])
   
   return (
@@ -25,6 +28,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/manage-contact" element={<ManageContact/>} />
         <Route path="/add-client/:id" element={<AddClient/>}/>
+        <Route path="/trashes" element={""}/>
       </Routes>
       <Background />
     </Center>

@@ -1,7 +1,7 @@
-import { ADD_CONTACTS, ADD_REQUIREMENTS, ALL_CONTACTS, COMMODITY, DESTINATION, DISTRICT, EMAIL, FROM, INDUSTRY, LANDLINE, NAME, PHONE, QUANTITY, REMOVE_CONTACT, STATE, TYPE } from "./action";
+import { ADD_CONTACTS, ADD_REQUIREMENTS, ALL_CONTACTS, ALL_TRASHES, COMMODITY, DESTINATION, DISTRICT, EMAIL, FROM, INDUSTRY, LANDLINE, MANAGE_CONTACT_STATUS, PHONE, QUANTITY, REMOVE_CONTACT, STATE, TYPE } from "./action";
 
 const initial = {
-   Name:'', 
+    manage_contact_status:'all_contacts',
    Type:'',
    Phone:'',
    email:'',
@@ -16,12 +16,13 @@ const initial = {
    Contacts:[],
    requirements:[],
    allContacts:[],
+   allTrashes:[],
 }
 
 export const mainReducer = (store=initial, {type, payload})=>{
     switch(type){
-        case NAME:
-            return {...store, Name:payload}
+        case MANAGE_CONTACT_STATUS:
+            return {...store, manage_contact_status:payload}
         case TYPE:
             return {...store, Type:payload}
         case PHONE:
@@ -52,6 +53,8 @@ export const mainReducer = (store=initial, {type, payload})=>{
             return {...store, requirements:[...store.requirements, payload]}
         case ALL_CONTACTS:
             return {...store, allContacts:payload}
+        case ALL_TRASHES:
+            return {...store, allTrashes:payload}
         default:
             return store;
     }

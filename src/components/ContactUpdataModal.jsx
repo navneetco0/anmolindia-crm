@@ -137,7 +137,8 @@ export const ContactUpdateModal = ({ data }) => {
             remarks: upValues.remarks,
             comment: upValues.comment,
             manager:data.manager
-          }).then(res=>{}).catch((error)=>console.log(error));
+          }).then(res=>{
+          }).catch((error)=>console.log(error));
         }}
       >
         Save

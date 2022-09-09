@@ -1,6 +1,5 @@
 
-
-export const NAME = "NAME";
+export const MANAGE_CONTACT_STATUS = "MANAGE_CONTACT_STATUS";
 export const TYPE = "TYPE";
 export const PHONE = "PHONE";
 export const EMAIL = "EMAIL";
@@ -16,11 +15,11 @@ export const ADD_CONTACTS = "ADD_CONTACTS";
 export const REMOVE_CONTACT = "REMOVE_CONTACT";
 export const ADD_REQUIREMENTS = "ADD_REQUIREMENTS";
 export const ALL_CONTACTS = "ALL_CONTACTS";
+export const ALL_TRASHES = "ALL_TRASHES";
 
-export const setName = (payload) =>({
-    type:NAME, payload
-});
-
+export const manageContactStatus = payload =>({
+    type:MANAGE_CONTACT_STATUS, payload
+})
 export const setType = (payload) =>({
     type:TYPE, payload
 });
@@ -79,4 +78,8 @@ export const addRequirements = (payload) =>({
 
 export const setAllContacts = (payload)=>({
     type:ALL_CONTACTS, payload
+});
+
+export const setAllTrashes = (payload)=>({
+    type:ALL_TRASHES, payload
 })

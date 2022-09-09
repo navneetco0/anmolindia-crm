@@ -1,14 +1,17 @@
-import { Box,  Flex, Text } from '@chakra-ui/react'
+import { Box,  Flex, Text, useToast } from '@chakra-ui/react'
 import { Navbar } from '../components/Navbar'
 import { useState } from 'react'
 import axios from 'axios';
 import { ImportData } from '../components/ManageContacts/ImportData'
 import { Table } from '../components/ManageContacts/Table'
 import { Sidebar } from '../components/ManageContacts/Sidebar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TrashTable } from '../components/ManageContacts/TrashTable';
+import { resContacts, resDuplicates, resTrashes } from '../Redux/action';
 
 export const ManageContact = () => {
+  const dispatch = useDispatch();
+  const toast = useToast();
   const [contact, setContact] = useState(null);
   const {manage_contact_status} = useSelector(state=>state.mainReducer);
 
@@ -17,7 +20,36 @@ export const ManageContact = () => {
       phone: contact,
       manager: 'Navneet',
       date: new Date().toLocaleDateString(),
+    }).then((res)=>{
+      if(res.data.duplicate){
+        dispatch(resDuplicates(res.data.duplicate));
+        toast({
+          position:'top',
+          title: `found ${res.data.duplicate.length} duplicate contact`,
+          status: 'info',
+          isClosable: true,
+        });
+      }
+      if(res.data.contacts){
+        dispatch(resContacts(res.data.contacts));
+        toast({
+          position:'top',
+          title: `found ${res.data.contacts.length} new contact`,
+          status: 'info',
+          isClosable: true,
+        });
+      }
+      if(res.data.trashes){
+        dispatch(resTrashes(res.data.trashes));
+        toast({
+          position:'top',
+          title:`found ${res.data.trashes.length} trashed contact`,
+          status: 'info',
+          isClosable: true,
+        });
+      }
     })
+    .catch(error=>{console.log(error)})
   }
   return (
     <Box w="100%" minH={'100vh'} position="relative">
@@ -45,6 +77,8 @@ export const ManageContact = () => {
           +
         </Text>
         <input
+        type={'tel'}
+        minlength={"10"} maxlength={10}
           style={{
             width: '100%',
             outline: 'transparent',

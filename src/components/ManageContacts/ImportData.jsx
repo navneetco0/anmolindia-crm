@@ -1,11 +1,15 @@
-import { Button, Center, Circle, Square, Text } from "@chakra-ui/react"
+import { Button, Center, Circle, Square, Text, useToast } from "@chakra-ui/react"
 import Draggable from "react-draggable";
 import { Excell } from "../../Assets/svg/Excell";
 import * as XLSX from 'xlsx'
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { resContacts, resDuplicates, resTrashes } from "../../Redux/action";
 
 export const ImportData = ()=>{
+  const toast = useToast();
+  const dispatch = useDispatch();
     const [excelFile, setExcelFile] = useState(null);
     const [fileName, setFileName] = useState(null);
 
@@ -38,9 +42,38 @@ export const ImportData = ()=>{
                     ? Element.date
                     : new Date().toLocaleDateString(),
                 },
-              ]
+              ];
           })
-          axios.post('http://localhost:3001/contacts', modified_data)
+          axios.post('http://localhost:3001/contacts', modified_data).then((res)=>{
+            if(res.data.duplicate){
+              dispatch(resDuplicates(res.data.duplicate));
+              toast({
+                position:'top',
+                title: `found ${res.data.duplicate.length} duplicate contact`,
+                status: 'info',
+                isClosable: true,
+              });
+            }
+            if(res.data.contacts){
+              dispatch(resContacts(res.data.contacts));
+              toast({
+                position:'top',
+                title: `found ${res.data.contacts.length} new contact`,
+                status: 'info',
+                isClosable: true,
+              });
+            }
+            if(res.data.trashes){
+              dispatch(resTrashes(res.data.trashes));
+              toast({
+                position:'top',
+                title:`found ${res.data.trashes.length} trashed contact`,
+                status: 'info',
+                isClosable: true,
+              });
+            }
+          })
+          .catch(error=>{console.log(error)})
         } else {
         }
       }

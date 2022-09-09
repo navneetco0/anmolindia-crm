@@ -5,6 +5,7 @@ import io from 'socket.io-client'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAllTrashes } from '../../Redux/action'
 import { EmptyBin } from '../../Assets/svg/EmptyBin'
+import axios from 'axios'
 const socket = io.connect('http://localhost:3001')
 
 export const TrashTable = () => {
@@ -43,10 +44,6 @@ export const TrashTable = () => {
                 <td>{Element.manager && Element.manager}</td>
                 <td>{Element.date && Element.date}</td>
                 <td
-                  style={{ cursor: 'pointer' }}
-                  //   onClick={() => {
-                  //     setEdit(Element)
-                  //   }}
                 >
                   <Box
                     w="fit-content"
@@ -54,6 +51,10 @@ export const TrashTable = () => {
                     _hover={{
                       transform: 'rotate(360deg)',
                       transition: 'transform 2s',
+                      cursor:'pointer'
+                    }}
+                    onClick={()=>{
+                      axios.delete(`http://localhost:3001/trash/${Element._id}`)
                     }}
                   >
                     <Restore />

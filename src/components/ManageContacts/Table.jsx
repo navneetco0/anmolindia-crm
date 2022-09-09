@@ -1,16 +1,17 @@
 import { PencilSquare } from '../../Assets/svg/PencilSquare'
 import { Plus } from '../../Assets/svg/Plus'
 import { Phone } from '../../Assets/svg/Phone'
-import { Box, Center, Text, useToast } from '@chakra-ui/react'
-import { useSelector } from 'react-redux'
+import { Box, Flex, Text } from '@chakra-ui/react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import { ContactUpdateModal } from '../ContactUpdataModal'
+import { ContactUpdateModal } from './ContactUpdataModal'
+import { Contact } from '../../Assets/svg/Contact'
+import { setEdit } from '../../Redux/action'
 
 export const Table = () => {
-  const toast = useToast()
+  const dispatch = useDispatch();
+  const {Edit} = useSelector(state=>state.mainReducer)
   const navigate = useNavigate()
-  const [Edit, setEdit] = useState(null)
   const { allContacts } = useSelector((state) => state.mainReducer)
   return (
     <Box
@@ -21,42 +22,10 @@ export const Table = () => {
       borderRadius="10px"
       m={'30px auto 10px'}
     >
-        {Edit && (
-        <Center
-          bg="rgba(0,0,0, 0.2)"
-          w="100%"
-          h="100vh"
-          top="0"
-          l="0"
-          position="absolute"
-          zIndex={'7'}
-        >
-          <Box
-            w={['90%', '80%', '70%', '50%']}
-            h="300px"
-            position={'relative'}
-            bg="white"
-            m="auto"
-            p="10px"
-            borderRadius={'10px'}
-          >
-            <Text
-              fontSize={'30px'}
-              fontWeight="500"
-              pos="absolute"
-              transform={'rotate(45deg)'}
-              right="10px"
-              top="10px"
-              cursor={'pointer'}
-              onClick={() => setEdit(null)}
-            >
-              +
-            </Text>
-            <ContactUpdateModal data={Edit} />
-          </Box>
-        </Center>
+    {Edit && (
+      <ContactUpdateModal data={Edit} />
       )}
-      <table
+     {allContacts.length? <table
         style={{
           padding: '5px',
           backgroundColor: 'white',
@@ -77,24 +46,15 @@ export const Table = () => {
             <th>call</th>
           </tr>
         </thead>
-        {allContacts && (
           <tbody>
             {allContacts.map((Element) => (
               <tr key={Element._id}>
                 <td>
                   <Box
-                    color={Element.name ? 'green' : 'red'}
-                    cursor={Element.name ? 'pointer' : 'not-allowed'}
-                    onClick={() =>
-                      Element.name
-                        ? navigate(`/add-client/${Element._id}`)
-                        : toast({
-                            position: 'top',
-                            title: `Please provide client name first`,
-                            status: 'error',
-                            isClosable: true,
-                          })
-                    }
+                    color='gray'
+                    cursor={'pointer'}
+                    _hover={{color:'green'}}
+                    onClick={() =>navigate(`/add-client/${Element._id}`)}
                   >
                     <Plus />
                   </Box>
@@ -109,7 +69,7 @@ export const Table = () => {
                 <td
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
-                    setEdit(Element)
+                    dispatch(setEdit(Element));
                   }}
                 >
                   <PencilSquare />
@@ -122,8 +82,12 @@ export const Table = () => {
               </tr>
             ))}
           </tbody>
-        )}
-      </table>
+      </table>:(
+        <Flex flexDir={'column'} alignItems="center">
+          <Contact/>
+          <Text fontSize="50px" color={'gray'} fontWeight="bold"> Empty Contact list </Text>
+        </Flex>
+      )}
     </Box>
   )
 }

@@ -24,22 +24,7 @@ export const ContactBox = ({ form }) => {
   return (
     <Wrapper>
       <FormSubHeading text={'Contact'} />
-      {/* <Flex
-        position={'absolute'}
-        gap="10px 3px"
-        w="calc(100% - 40px)"
-        mb={Contacts ? '30px' : '0px'}
-        overflowX="scroll"
-        z-index="3"
-        mt={Contacts ? '40px' : '0px'}
-      >
-        {Contacts &&
-          Contacts.map((Element, index) => (
-            <ContactTag Element={Element} index={index} key={index} />
-          ))}
-      </Flex> */}
       <Flex
-        mt={'40px'}
         flexWrap="wrap"
         justifyContent="space-between"
         gap="2%"
@@ -47,24 +32,20 @@ export const ContactBox = ({ form }) => {
       >
         <Flex
           bg="rgba(148, 180, 159, 0.5)"
-          mb="10px"
           h="fit-content"
           w={['100%', '100%', '49%']}
+          position={"relative"} mb="10px"
         >
-          <Text display={'block'} fontWeight={'500'} ml="10px" mt="10px">
-            Phone
-          </Text>
+          <Text display={'block'} fontWeight={'500'} pos="absolute" top={'8px'} left="5px">Phone</Text>
           <Flex position={'relative'} w="100%">
-            <Box position={'absolute'} zIndex="2" bottom={0} p="8px">
-              +91
-            </Box>
             <Input
+            borderColor={'gray'}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleContact()
               }}
               autoComplete="off"
               id="phone"
-              pl="40px"
+              pl="60px"
               type="tel"
               value={form.phone}
               variant="flushed"

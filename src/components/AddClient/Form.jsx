@@ -66,7 +66,6 @@ export const Form = () => {
           display={'block'}
           bg="#ff9200"
           onClick={() => handleSubmit()}
-          mb="20px"
         >
           Add
         </Button>

@@ -11,7 +11,7 @@ export const LabelInputSelect = ({ label, data, form }) => {
       autoComplete="off"
       pl={`calc(${label.length} * 10px + 10px)`}
         variant="flushed"
-        borderColor={"gray.200"}
+        borderColor={"gray"}
         focusBorderColor="rgba(255, 144, 0, 0.8)"
         id={label}
         placeholder={`Enter your ${label} here...`}

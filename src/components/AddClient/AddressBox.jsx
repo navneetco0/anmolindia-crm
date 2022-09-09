@@ -19,7 +19,6 @@ export const AddressBox = ({form})=>{
               flexWrap: "wrap",
               justifyContent: "space-between",
               gap: "2%",
-              marginTop: "40px",
             }}
             w="100%"
           >

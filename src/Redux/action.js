@@ -9,6 +9,7 @@ export const SET_EDIT = "SET_EDIT";
 export const RES_DUPLICATES = "RES_DUPLICATES";
 export const RES_TRASHES = "RES_TRASHES";
 export const RES_CONTACTS = "RES_CONTACTS";
+export const SET_FORM = "SET_FORM";
 
 export const manageContactStatus = payload =>({
     type:MANAGE_CONTACT_STATUS, payload
@@ -48,4 +49,8 @@ export const resTrashes = payload =>({
 
 export const resContacts = payload =>({
     type:RES_CONTACTS, payload
+});
+
+export const setFormData = payload =>({
+    type:SET_FORM, payload
 })

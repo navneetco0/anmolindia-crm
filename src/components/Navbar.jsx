@@ -19,6 +19,7 @@ export const Navbar = () => {
       justifyContent="space-between"
       borderBottom="1px solid rgba(127, 127, 12, 0.2)"
       color="gold"
+      userSelect="none"
     >
       <Center>
         <Text fontSize={'40px'} fontWeight="500">

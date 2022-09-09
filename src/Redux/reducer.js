@@ -1,4 +1,4 @@
-import { ADD_CONTACTS, ADD_REQUIREMENTS, ALL_CONTACTS, ALL_TRASHES, MANAGE_CONTACT_STATUS, REMOVE_CONTACT, RES_CONTACTS, RES_DUPLICATES, RES_TRASHES, SET_EDIT } from "./action";
+import { ADD_CONTACTS, ADD_REQUIREMENTS, ALL_CONTACTS, ALL_TRASHES, MANAGE_CONTACT_STATUS, REMOVE_CONTACT, RES_CONTACTS, RES_DUPLICATES, RES_TRASHES, SET_EDIT, SET_FORM } from "./action";
 
 const initial = {
    manage_contact_status:'all_contacts',
@@ -10,6 +10,7 @@ const initial = {
    ResContacts:[],
    ResTrashes:[],
    ResDuplicates:[],
+   formData:[],
 }
 
 export const mainReducer = (store=initial, {type, payload})=>{
@@ -34,6 +35,8 @@ export const mainReducer = (store=initial, {type, payload})=>{
             return {...store, ResDuplicates:payload}
         case RES_TRASHES:
             return {...store, ResTrashes:payload}
+        case SET_FORM:
+            return {...store, formData:payload}
         default:
             return store;
     }

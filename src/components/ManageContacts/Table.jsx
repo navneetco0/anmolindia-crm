@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { ContactUpdateModal } from './ContactUpdataModal'
 import { Contact } from '../../Assets/svg/Contact'
-import { setEdit } from '../../Redux/action'
+import { addContacts, setAllContacts, setEdit } from '../../Redux/action'
 
 export const Table = () => {
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ export const Table = () => {
                     color='gray'
                     cursor={'pointer'}
                     _hover={{color:'green'}}
-                    onClick={() =>navigate(`/add-client/${Element._id}`)}
+                    onClick={() =>{ dispatch(addContacts(Element.phone&&Element.phone));navigate(`/add-client/${Element._id}`);}}
                   >
                     <Plus />
                   </Box>

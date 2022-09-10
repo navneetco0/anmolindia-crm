@@ -3,16 +3,16 @@ import { AllContacts } from '../../Assets/svg/AllContacts';
 import { Trash } from '../../Assets/svg/Trash';
 import { useDispatch, useSelector } from 'react-redux'
 import { manageContactStatus } from '../../Redux/action'
-import { MyContacts } from '../../Assets/svg/MyContacts';
+import { AllClient } from '../../Assets/svg/AllClient';
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
   const {manage_contact_status} = useSelector(state=>state.mainReducer);
   const data = [
-    { title: 'All Contacts', icon:<AllContacts/>, fill:'all_contacts'},
-    { title: 'My Contacts', icon:<MyContacts/>, fill:'my_contacts'},
-    { title: 'Trash', icon: <Trash />, fill: 'trash' }
-  ]
+    { title: 'All Client', icon:<AllClient/>, fill:'all_client'},
+    { title: 'My Client', icon:<AllClient/>, fill:'my_client'},
+  ];
+
   return (
     <Box
       position={'fixed'}
@@ -20,6 +20,8 @@ export const Sidebar = () => {
       bg="white"
       height={'100vh'}
       overflowY="scroll"
+      left="0"
+      top="0"
       pr="10px"
       pt="100px"
     >

@@ -1,4 +1,4 @@
-import { Box, Flex, Input, Text } from "@chakra-ui/react"
+import { Flex, Input, Text } from "@chakra-ui/react"
 
 
 export const LabelInput = ({label, type})=>{

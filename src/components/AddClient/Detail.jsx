@@ -1,16 +1,9 @@
 import { Box, Flex, Text } from '@chakra-ui/react'
-import axios from 'axios'
-import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-export const Detail = () => {
-  const { id } = useParams()
-
-  const { data } = useQuery(['client_data', id], () => {
-    return axios.get(`http://localhost:3001/contacts/${id}`)
-  })
-
+export const Detail = ({data}) => {
+  const {id}  = useParams();
   const { formData, Contacts, requirements } = useSelector(
     (state) => state.mainReducer,
   )
@@ -40,7 +33,6 @@ export const Detail = () => {
           <b>Contacts: </b>{' '}
         </Text>
         <Flex flexWrap={'wrap'}>
-          <Text m="0 5px">{data?.data?.phone}</Text>
           {Contacts &&
             Contacts.map((Element, index) => <Text m="0 5px">{Element}</Text>)}
         </Flex>

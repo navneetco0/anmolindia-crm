@@ -1,8 +1,8 @@
-export const Button = ()=>{
+export const Button = ({title})=>{
     return (
         <input
         type="submit"
-        value="Add"
+        value={title}
         style={{
           backgroundColor: "#ff9200",
           display: "block",

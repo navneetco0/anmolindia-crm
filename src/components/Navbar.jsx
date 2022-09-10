@@ -39,6 +39,15 @@ export const Navbar = () => {
         >
           Manage Contacts
         </Text>
+        <Text
+          cursor={'pointer'}
+          fontWeight={'500'}
+          m="0px 10px"
+          onClick={() => navigate('/clients')}
+          _hover={{ textDecoration: 'underline' }}
+        >
+          Clients
+        </Text>
         <Box ml="10px" position="relative">
           <Box cursor={'pointer'} onClick={() => setShowGrid(!showGrid)}>
             <Grid />

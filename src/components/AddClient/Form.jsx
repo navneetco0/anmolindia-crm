@@ -8,26 +8,32 @@ import { Requirements } from "./Requirements";
 import { AddressBox } from "./AddressBox";
 import { Button } from "./Botton";
 import { setFormData } from "../../Redux/action";
+import { useToast } from '@chakra-ui/react';
+import { useNavigate } from "react-router-dom";
 
-export const Form = () => {
+export const Form = ({data}) => {
+  const navigate = useNavigate();
+  const toast = useToast();
     const dispatch = useDispatch();
   const { Contacts, requirements } = useSelector((state) => state.mainReducer)
   const [form, setForm] = useState({
-    Name: '',
+    Name: data?.data.name?data.data.name:'',
     Type: 'Consumer',
     State: 'Andhra Pradesh',
     Commodity: '',
     From: '',
     Industry: '',
     Destination: '',
-    phone: '',
-  })
+    phone: data?.data.phone?data.data.phone:'',
+  });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
-    dispatch(setFormData({ ...form, [e.target.id]: e.target.value }))
+    dispatch(setFormData({ ...form, [e.target.id]: e.target.value }));
   }
-  const handleSubmit = (e) => 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if(Contacts.length){
     axios
       .post('http://localhost:3001/client', {
         Name: form.Name,
@@ -40,6 +46,22 @@ export const Form = () => {
         requirements,
       })
       .then((res) => console.log(res.data))
+      .catch(error=>console.log(error));
+      toast({
+        position:'top',
+        title: `Client added successfully`,
+        status: 'success',
+        isClosable: true,
+      });
+      navigate('/clients')
+    }
+      else  toast({
+        position:'top',
+        title: `please add atleast one contact number`,
+        status: 'warning',
+        isClosable: true,
+      })
+  }
   return (
     <Box
       w="calc(98% - 380px)"
@@ -53,22 +75,14 @@ export const Form = () => {
     >
       <form
         onChange={(e) => handleChange(e)}
-        onSubmit={(e) => {e.preventDefault()}}
+        onSubmit={(e) => handleSubmit(e)}
         style={{width: '100%'}}
       >
         <Client />
         <ContactBox form={form} />
         <AddressBox form={form} />
         <Requirements form={form} />
-        <Button
-          margin={'auto'}
-          colorScheme="yellow"
-          display={'block'}
-          bg="#ff9200"
-          onClick={() => handleSubmit()}
-        >
-          Add
-        </Button>
+        <Button>Add</Button>
       </form>
     </Box>
   )

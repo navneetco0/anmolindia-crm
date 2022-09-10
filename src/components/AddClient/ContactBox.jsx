@@ -1,7 +1,6 @@
 import { Box, Flex, Input, Text, useToast } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addContacts } from '../../Redux/action'
-import { ContactTag } from '../ContactTag'
 import { FormSubHeading } from './FormSubHeading'
 import { LabelInput } from './LabelInput'
 import { Wrapper } from './Styles'
